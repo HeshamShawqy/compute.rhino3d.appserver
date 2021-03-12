@@ -7,11 +7,11 @@
         <style>
             body {
               
-                margin: 0;
+                margin: 10;
                 font-family: "Montserrat", sans-serif;  
                 font-size: 1rem;
                 color: rgb(0, 0, 0);
-                background-color: rgb(255, 255, 255);
+                background-color: rgb(218, 237, 250);
                 text-align:left;
 
             }
@@ -26,7 +26,7 @@
 
               }
               
-            #overlay div { padding: 2px; }
+            #overlay div { padding: 5px; }
             #loader {
                 border: 5px solid #f3f3f3; /* Light grey */
                 border-top: 5px solid #3d3d3d; /* Grey */
@@ -49,61 +49,68 @@
         <div id="loader"></div> 
         <div id="container">
             <div id="overlay">
-              <div><h2>Cloudscape</h1></div>
+              <div><h2>||CLOUDSCAPE ☁  ☁ ☁ </h1></div>
                 <div>
-                  <label for="RH_IN:Water">RH_IN:Water</label>
+                  <label for="RH_IN:Water">Water Radius</label>
                   <input type="range" id="RH_IN:Water" min="0" max="100" value="48" step="1">
                 </div>
                 <div>
-                  <label for="RH_IN:Seating">RH_IN:Seating</label>
+                  <label for="RH_IN:Seating">Seating Radius</label>
                   <input type="range" id="RH_IN:Seating" min="0" max="100" value="15" step="1">
                 </div>
                 <div>
-                  <label for="RH_IN:Fire place">RH_IN:Fire place</label>
+                  <label for="RH_IN:Fire place">Fire Place Radius</label>
                   <input type="range" id="RH_IN:Fire place" min="0" max="100" value="7" step="1">
                 </div>
                 <div>
-                  <label for="RH_IN:Green01">RH_IN:Green01</label>
+                  <label for="RH_IN:Green01">Green+ Radius</label>
                   <input type="range" id="RH_IN:Green01" min="0" max="100" value="15" step="1">
                 </div>
                 <div>
-                  <label for="RH_IN:Green02">RH_IN:Green02</label>
+                  <label for="RH_IN:Green02">Green++ Radius</label>
                   <input type="range" id="RH_IN:Green02" min="0" max="100" value="29" step="1">
                 </div>
                 <div>
-                  <label for="RH_IN:Green03">RH_IN:Green03</label>
+                  <label for="RH_IN:Green03">Green+++ Radius</label>
                   <input type="range" id="RH_IN:Green03" min="0" max="100" value="37" step="1">
                 </div>
                 <div>
-                  <label for="RH_IN:Iterations">RH_IN:Iterations</label>
+                  <label for="RH_IN:Iterations">Iterations</label>
                   <input type="range" id="RH_IN:Iterations" min="1" max="100" value="45" step="1">
                 </div>
                 <div>
-                  <label for="RH_IN:Fillet">RH_IN:Fillet</label>
+                  <label for="RH_IN:Fillet">Fillet Radius</label>
                   <input type="range" id="RH_IN:Fillet" min="0" max="10" value="5" step="1">
                 </div>
                 <div>
-                  <label for="RH_IN:Trees Scale">RH_IN:Trees Scale</label>
-                  <input type="range" id="RH_IN:Trees Scale" min="0.1" max="5" value=".8" step=".1">
+                  <label for="RH_IN:Show Trees">Add Trees</label>
+                  <input type="checkbox" id="RH_IN:Show Trees" >
                 </div>
                 <div>
-                  <label for="RH_IN:Trees Location">RH_IN:Trees Location</label>
-                  <input type="range" id="RH_IN:Trees Location" min="0" max="1" value="0.556323" step=".01">
+                  <label for="RH_IN:Trees Scale">Trees Scale</label>
+                  <input type="range" id="RH_IN:Trees Scale" min="0.1" max="2" value=".7" step=".1">
                 </div>
                 <div>
-                  <label for="RH_IN:Trees No">RH_IN:Trees No</label>
-                  <input type="range" id="RH_IN:Trees No" min="0.01" max="0.05" value="0.02" step=".004">
+                  <label for="RH_IN:Trees Location">Trees Scattering</label>
+                  <input type="range" id="RH_IN:Trees Location" min="1" max="15" value="5" step="1">
                 </div>
                 <div>
-                  <label for="RH_IN:Show trees">RH_IN:Show trees</label>
-                  <input type="checkbox" id="RH_IN:Show trees" >
+                  <label for="RH_IN:Trees No">Trees Count</label>
+                  <input type="range" id="RH_IN:Trees No" min="5" max="200" value="0" step="1">
                 </div>
                 <div>
-                  <label for="RH_IN:Show Annotations">RH_IN:Show Annotations</label>
+                  <label for="RH_IN:Color Manipulation">Color Manipulation</label>
+                  <input type="checkbox" id="RH_IN:Color Manipulation" >
+                </div>
+                <div>
+                  <label for="RH_IN:Hue">Hue</label>
+                  <input type="range" id="RH_IN:Hue" min="0" max="1" value="1" step="0.1">
+                </div>
+                <div>
+                  <label for="RH_IN:Show Annotations">Show Annotations</label>
                   <input type="checkbox" id="RH_IN:Show Annotations" >
                 </div>
                 <div><button id="downloadButton" disabled>Download</button></div>
-                <div><a href="LandscapeProject_210311.gh" download="LandscapeProject_210311.gh.html">Save source code</a></div>
             </div>
         </div>
 
@@ -112,7 +119,6 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.126.0/build/three.m
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.126.0/examples/jsm/controls/OrbitControls.js'
 import { Rhino3dmLoader } from 'https://cdn.jsdelivr.net/npm/three@0.126.0/examples/jsm/loaders/3DMLoader.js'
 import rhino3dm from 'https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/rhino3dm.module.js'
-
 // set up loader for converting the results to threejs
 const loader = new Rhino3dmLoader()
 loader.setLibraryPath( 'https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/' )
@@ -125,6 +131,9 @@ const data = {
 
 // globals
 let rhino, doc
+let cameraRig, activeCamera, activeHelper;
+let cameraPerspective, cameraOrtho;
+let cameraPerspectiveHelper, cameraOrthoHelper;
 
 rhino3dm().then(async m => {
     rhino = m
@@ -220,13 +229,24 @@ function init() {
 
     // create a scene and a camera
     scene = new THREE.Scene()
-    scene.background = new THREE.Color(1, 1, 1)
-    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000)
-    camera.position.set(-1, -1, 1) // like perspective view
+    scene.background = new THREE.Color( 0xdaedfa )
+		scene.fog = new THREE.Fog( 0xffffff, 500, 900 )
+    camera = new THREE.PerspectiveCamera(4.5, window.innerWidth / window.innerHeight, 1, 1000)
+    camera.position.set(-250, -550, 250) // like perspective view
+    camera.lookAt( 50, 500, 0 )
+  
+    /**const geometry = new THREE.BufferGeometry()
+    const vertices = []
+    for ( let i = 0; i < 10000; i ++ ) {
+      vertices.push( THREE.MathUtils.randFloatSpread( 2000 ) ) // x
+      vertices.push( THREE.MathUtils.randFloatSpread( 2000 ) ) // y
+      vertices.push( THREE.MathUtils.randFloatSpread( 2000 ) ) // z
+    }
+    geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) )
 
-    
-    // very light grey for background, like rhino
-    scene.background = new THREE.Color('whitesmoke')
+    const particles = new THREE.Points( geometry, new THREE.PointsMaterial( { color: 0x888888 } ) )
+
+    scene.add( particles )*/
 
     // create the renderer and add it to the html
     renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -236,15 +256,26 @@ function init() {
 
     // add some controls to orbit the camera
     controls = new OrbitControls(camera, renderer.domElement)
+    controls.target.set(6, -5, 20);
+    controls.update();
 
     // add a directional light
-    
-    const directionalLight = new THREE.DirectionalLight( 0xffffff )
-    directionalLight.intensity = 2
-    scene.add( directionalLight )
 
-    const ambientLight = new THREE.AmbientLight()
-    scene.add( ambientLight )
+    scene.add( new THREE.AmbientLight( 0xf1e3c9, 2 ) )
+    const light = new THREE.DirectionalLight( 0xf1e3c9, 3 )
+    light.position.set( 200, 800, 300 )
+    light.position.multiplyScalar( 5000 )
+    light.castShadow = true;
+    light.shadow.mapSize.width = 1024;
+    light.shadow.mapSize.height = 1024;
+    const d = 500;
+    light.shadow.camera.left = - d;
+    light.shadow.camera.right = d;
+    light.shadow.camera.top = d;
+    light.shadow.camera.bottom = - d;
+    light.shadow.camera.far = 2000;
+    scene.add( light );
+    
 
     // handle changes in the window size
     window.addEventListener( 'resize', onWindowResize, false )
@@ -333,6 +364,20 @@ function collectResults(responseJson) {
             }
         })
 
+         // color crvs
+      object.traverse(child => {
+        if (child.isLine) {
+          if (child.userData.attributes.geometry.userStringCount > 0) {
+            //console.log(child.userData.attributes.geometry.userStrings[0][1])
+            const col = child.userData.attributes.geometry.userStrings[0][1]
+            const threeColor = new THREE.Color( "rgb(" + col + ")")
+            const mat = new THREE.LineBasicMaterial({color:threeColor})
+            child.material = mat
+          }
+        }
+      })
+
+
         // add object graph from rhino model to three.js scene
         scene.add( object )
 
@@ -341,7 +386,7 @@ function collectResults(responseJson) {
         downloadButton.disabled = false
 
         // zoom to extents
-        zoomCameraToSelection(camera, controls, scene.children)
+        //zoomCameraToSelection(camera, controls, scene.children)
     })
 }
 
@@ -409,8 +454,7 @@ function onWindowResize() {
 
 /**
  * Helper function that behaves like rhino's "zoom to selection", but for three.js!
- */
-function zoomCameraToSelection( camera, controls, selection, fitOffset = 1.2 ) {
+ *function zoomCameraToSelection( camera, controls, selection, fitOffset = 1.2 ) {
   
   const box = new THREE.Box3();
   
