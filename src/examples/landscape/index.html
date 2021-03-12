@@ -13,8 +13,13 @@
             input[type=range] { width: 100%; }
             #container { position: relative; }
             #container canvas, #overlay { position: absolute; }
-            #overlay { z-index: 1; width: 100%; }
-            #overlay div { padding: 5px; }
+            #overlay { 
+              z-index: 1; 
+              width: 20vw; 
+              Height: 100vw;
+
+              }
+            #overlay div { padding: 2px; }
             #loader {
                 border: 5px solid #f3f3f3; /* Light grey */
                 border-top: 5px solid #3d3d3d; /* Grey */
@@ -37,6 +42,7 @@
         <div id="loader"></div> 
         <div id="container">
             <div id="overlay">
+              <div><h3>Cloudscape</h1></div>
                 <div>
                   <label for="RH_IN:Water">RH_IN:Water</label>
                   <input type="range" id="RH_IN:Water" min="0" max="100" value="48" step="1">
@@ -71,7 +77,7 @@
                 </div>
                 <div>
                   <label for="RH_IN:Trees Scale">RH_IN:Trees Scale</label>
-                  <input type="range" id="RH_IN:Trees Scale" min="1" max="50" value="1" step="1">
+                  <input type="range" id="RH_IN:Trees Scale" min="0.1" max="5" value=".8" step=".1">
                 </div>
                 <div>
                   <label for="RH_IN:Trees Location">RH_IN:Trees Location</label>
