@@ -76,7 +76,7 @@
                 </div>
                 <div>
                   <label for="RH_IN:Iterations">Iterations</label>
-                  <input type="range" id="RH_IN:Iterations" min="1" max="100" value="45" step="1">
+                  <input type="range" id="RH_IN:Iterations" min="1" max="100" value="44" step="1">
                 </div>
                 <div>
                   <label for="RH_IN:Fillet">Fillet Radius</label>
@@ -139,11 +139,11 @@ rhino3dm().then(async m => {
     rhino = m
 
     init()
-    rndPts()
+    //rndPts()
     compute()
 })
 
-function rndPts() {
+//function rndPts() {
   // generate random points (Help, this step is not working!)
 /**
   const cntPts = 3
@@ -179,7 +179,7 @@ function rndPts() {
   }
   */
 
-}
+//}
 
 const downloadButton = document.getElementById("downloadButton")
 downloadButton.onclick = download
