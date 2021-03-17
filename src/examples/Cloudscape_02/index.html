@@ -121,11 +121,65 @@ const loader = new Rhino3dmLoader()
 loader.setLibraryPath( 'https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/' )
 
 const definition = 'Cloudscape_02.gh'
-const data = {
-  definition: 'Cloudscape_02.gh',
-  inputs: getInputs()
-}
 
+//adding inputs
+const Iterations = document.getElementById( 'RH_IN:Iterations' )
+Iterations.addEventListener( 'mouseup', onSliderChange, false )
+Iterations.addEventListener( 'touchend', onSliderChange, false )
+
+const Fillet = document.getElementById( 'RH_IN:Fillet' )
+Fillet.addEventListener( 'mouseup', onSliderChange, false )
+Fillet.addEventListener( 'touchend', onSliderChange, false )
+
+const Annotations = document.getElementById( 'RH_IN:Show Annotations' )
+Annotations.addEventListener( 'change', onSliderChange, false )
+
+const Showtrees = document.getElementById( 'RH_IN:Show Trees' )
+Showtrees.addEventListener( 'change', onSliderChange, false )
+
+const TreesNo = document.getElementById( 'RH_IN:Trees No' )
+TreesNo.addEventListener( 'mouseup', onSliderChange, false )
+TreesNo.addEventListener( 'touchend', onSliderChange, false )
+
+const TreesLocation = document.getElementById( 'RH_IN:Trees Location' )
+TreesLocation.addEventListener( 'mouseup', onSliderChange, false )
+TreesLocation.addEventListener( 'touchend', onSliderChange, false )
+
+const TreesScale = document.getElementById( 'RH_IN:Trees Scale' )
+TreesScale.addEventListener( 'mouseup', onSliderChange, false )
+TreesScale.addEventListener( 'touchend', onSliderChange, false )
+
+const Colors = document.getElementById( 'RH_IN:Color Manipulation' )
+Colors.addEventListener( 'change', onSliderChange, false )
+
+const Hue = document.getElementById( 'RH_IN:Hue' )
+Hue.addEventListener( 'mouseup', onSliderChange, false )
+Hue.addEventListener( 'touchend', onSliderChange, false )
+
+const Water = document.getElementById( 'RH_IN:Water' )
+Water.addEventListener( 'mouseup', onSliderChange, false )
+Water.addEventListener( 'touchend', onSliderChange, false )
+
+const Seating = document.getElementById( 'RH_IN:Seating' )
+Seating.addEventListener( 'mouseup', onSliderChange, false )
+Seating.addEventListener( 'touchend', onSliderChange, false )
+
+const Fireplace = document.getElementById( 'RH_IN:Fire place' )
+Fireplace.addEventListener( 'mouseup', onSliderChange, false )
+Fireplace.addEventListener( 'touchend', onSliderChange, false )
+
+const Green01 = document.getElementById( 'RH_IN:Green01' )
+Green01.addEventListener( 'mouseup', onSliderChange, false )
+Green01.addEventListener( 'touchend', onSliderChange, false )
+
+const Green02 = document.getElementById( 'RH_IN:Green02' )
+Green02.addEventListener( 'mouseup', onSliderChange, false )
+Green02.addEventListener( 'touchend', onSliderChange, false )
+
+const Green03 = document.getElementById( 'RH_IN:Green03' )
+Green03.addEventListener( 'mouseup', onSliderChange, false )
+Green03.addEventListener( 'touchend', onSliderChange, false )
+        
 let points = []
 let cameraRig, activeCamera, activeHelper;
 let cameraPerspective, cameraOrtho;
@@ -141,48 +195,13 @@ rhino3dm().then(async m => {
   compute()
 })
 
-function getInputs() {
-  const inputs = {}
-  for (const input of document.getElementsByTagName('input')) {
-    switch (input.type) {
-      case 'number':
-        inputs[input.id] = input.valueAsNumber
-        input.onchange = onSliderChange
-        break
-      case 'range':
-        inputs[input.id] = input.valueAsNumber
-        input.onmouseup = onSliderChange
-        input.ontouchend = onSliderChange
-        break
-      case 'checkbox':
-        inputs[input.id] = input.checked
-        input.onclick = onSliderChange
-        break
-      default:
-        break
-    }
-  }
-  return inputs
-}
+
 const downloadButton = document.getElementById("downloadButton")
 downloadButton.onclick = download
 
 
 function rndPts() {
-  // generate random points
-
-  //const cntPts = 3
-  //const bndX = dimension_slider.valueAsNumber / 2
-  //const bndY = dimension_slider.valueAsNumber / 2
-  /**{27.150563, 8.293628, 0}
-     {24.153208, 25.703206, 0}
-     {17.420596, 34.994777, 0}
-     {11.761892, 41.719428, 0}
-     {19.842959, 66.148631, 0}
-     {35.610977, 69.359109, 0}
-     {50.133011, 29.684583, 0}
-     {40.877956, 15.798611, 0}
-     */
+  // generate Inital points
   const startPts = [
     { x: 27, y: 8, z: 0 },
     { x: 24, y: 25, z: 0 },
@@ -196,9 +215,6 @@ function rndPts() {
 const cntPts = startPts.length
 
   for (let i = 0; i < cntPts; i++) {
-    //const x = Math.random() * (bndX - -bndX) + -bndX
-    //const y = Math.random() * (bndY - -bndY) + -bndY
-    //const z = 0
     const x = startPts[i].x
     const y = startPts[i].y
     const z = startPts[i].z
@@ -210,8 +226,8 @@ const cntPts = startPts.length
     points.push(pt)
 
     //viz in three
-    const icoGeo = new THREE.SphereGeometry(0.5)
-    const icoMat = new THREE.MeshNormalMaterial(3)
+    const icoGeo = new THREE.SphereGeometry(0.3)
+    const icoMat = new THREE.MeshNormalMaterial(50)
     const ico = new THREE.Mesh( icoGeo, icoMat )
     ico.name = 'ico'
     ico.position.set( x, y, z)
@@ -222,6 +238,7 @@ const cntPts = startPts.length
     tcontrols.attach( ico )
     tcontrols.showZ = false
     tcontrols.addEventListener( 'dragging-changed', onChange )
+    tcontrols.setSize(.5)
     scene.add(tcontrols)
     
   }
@@ -261,8 +278,22 @@ async function compute () {
     inputs: {
       //'dimension': dimension_slider.valueAsNumber,
      // 'height': height_slider.valueAsNumber,
-      //'RH_IN:Fillet': height_slider.valueAsNumber,
-      'points': points
+     'RH_IN:Iterations': Iterations.valueAsNumber,
+     'RH_IN:Fillet': Fillet.valueAsNumber,
+     'RH_IN:Show Annotations': Annotations.checked,
+     'RH_IN:Show Trees': Showtrees.checked,
+     'RH_IN:Trees No': TreesNo.valueAsNumber,
+     'RH_IN:Trees Location': TreesLocation.valueAsNumber,
+     'RH_IN:Trees Scale': TreesScale.valueAsNumber,
+     'RH_IN:Color Manipulation': Colors.checked,
+     'RH_IN:Hue': Hue.valueAsNumber,
+     'RH_IN:Water': Water.valueAsNumber,
+     'RH_IN:Seating': Seating.valueAsNumber,
+     'RH_IN:Fire place': Fireplace.valueAsNumber,
+     'RH_IN:Green01': Green01.valueAsNumber,
+     'RH_IN:Green02': Green02.valueAsNumber,
+     'RH_IN:Green03': Green03.valueAsNumber,
+     'points': points
     }
   }
 
@@ -392,7 +423,7 @@ return null
  function onSliderChange () {
   showSpinner(true)
   // get slider values
-  let inputs = {}
+  /*let inputs = {}
   for (const input of document.getElementsByTagName('input')) {
     switch (input.type) {
     case 'number':
@@ -407,7 +438,7 @@ return null
     }
   }
   
-  data.inputs = inputs
+  data.inputs = inputs*/
 
   compute()
 }
